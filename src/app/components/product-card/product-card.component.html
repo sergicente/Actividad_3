@@ -5,8 +5,8 @@
         @if(!edicionActiva){
 
             <img
-            [src]="productoSeleccionado.image || '/Actividad_3/sin_imagen.jpg'"
-            style="margin:auto; display:block; mix-blend-mode: multiply!important;"
+            [src]="productoSeleccionado.image || './browser/sin_imagen.jpg'"
+            style="max-height: 500px;"
             class="img-fluid rounded-4 remove-bg"
             alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
           />
@@ -36,8 +36,8 @@
 
         }@else {
             <img
-            [src]="productoEditable.image || '/Actividad_3/sin_imagen.jpg'"
-            style="margin:auto; display:block; mix-blend-mode: multiply!important;"
+            [src]="productoEditable.image || './browser/sin_imagen.jpg'"
+            style="max-height: 500px;"
             class="img-fluid rounded-4 remove-bg"
             alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
           />
