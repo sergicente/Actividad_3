@@ -1,0 +1,27 @@
+.img-fixed {
+    height: 30vw;
+    object-fit: cover;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.descripcion {
+    font-size: 12px;
+    font-weight: 500;
+    color: #222;
+}
+
+.d-block{
+    background-color: #eceff3a0;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+}
+
+.inactivo{
+    opacity: 0.5;
+  }
+

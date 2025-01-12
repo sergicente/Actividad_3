@@ -1,0 +1,7 @@
+input.ng-valid.ng-touched, textarea.ng-valid.ng-touched, select.ng-valid.ng-touched{
+    border-color: #198754;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched, select.ng-invalid.ng-touched{
+    border-color: #dc3545;
+}

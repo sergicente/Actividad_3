@@ -1,0 +1,52 @@
+<div class="mt-4 mb-3">
+
+
+  <form class="row g-3 align-items-center justify-content-between">
+
+    <!-- nombre -->
+    <div class="col-lg-3 col-md-3 col-sm-6">
+      <input type="text" class="form-control  rounded-3 border-0" placeholder="Buscar por nombre" name="nombre"
+        [(ngModel)]="filtros.nombre" (ngModelChange)="aplicarFiltros()" />
+    </div>
+
+    <!-- categoría -->
+    <div class="col-lg-3 col-md-4 col-sm-6 d-flex align-items-center">
+      <label class="me-2" for="categoria"><small>Categoría:</small></label>
+
+      <select class="form-select  rounded-3 border-0" name="categoria" [(ngModel)]="filtros.categoria"
+        (ngModelChange)="aplicarFiltros()">
+        <option value="">Todas</option>
+        <option value="hombre">Hombre</option>
+        <option value="mujer">Mujer</option>
+        <option value="niño">Niño</option>
+      </select>
+    </div>
+
+    <!-- precio -->
+    <div class="col-lg-3 col-md-4 col-sm-6 d-flex align-items-center">
+      <label class="me-2" for="precioMin"><small>Precio:</small></label>
+
+      <input type="number" class="form-control text-center me-1 rounded-3 border-0 " placeholder="Mín." name="precioMin"
+        [(ngModel)]="filtros.precioMin" (ngModelChange)="aplicarFiltros()" min="0" max="99" />
+      <span class="me-1">-</span>
+      <input type="number" class="form-control text-center me-1 rounded-3 border-0 " placeholder="Máx." name="precioMax"
+        [(ngModel)]="filtros.precioMax" (ngModelChange)="aplicarFiltros()" min="0" max="99" />
+    </div>
+
+    <!-- activo -->
+    <div class="col-lg-1 col-md-1 col-sm-3 d-flex align-items-center form-switch">
+      <input type="checkbox" class="form-check-input" name="activo" [(ngModel)]="filtros.activo"
+        (ngModelChange)="aplicarFiltros()" id="activoCheck" />
+      <label for="activoCheck" class=" ms-2 small form-check-label">Activos</label>
+    </div>
+
+    <!-- reset -->
+    <div class="col-lg-1 col-md-3 col-sm-2">
+      <button type="button" class="btn btn-outline-secondary rounded-3 w-100  text-muted bg-white border-0 small"
+        (click)="reset()">Reset</button>
+    </div>
+
+  </form>
+
+
+</div>

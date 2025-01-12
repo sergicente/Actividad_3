@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap');
+
+* {
+  font-family: "Nunito", serif;
+}
+
+body {
+  background-color: #eceff3 !important;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.remove-bg{
+  mix-blend-mode: multiply;
+}
+
+.cerrar{
+  padding: 1.1rem 1.5rem !important;
+}

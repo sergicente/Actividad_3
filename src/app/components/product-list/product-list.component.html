@@ -1,0 +1,71 @@
+<section>
+    <div class="container m-auto pt-5 pb-5">
+
+        <h2>Inventario de productos</h2>
+
+
+
+        <app-product-filter
+            (onFiltrar)="filtrarProductos($event)"></app-product-filter>
+
+        @if(mostrarAlerta){
+        <div class="alert alert-success mt-3 mb-0" role="alert">
+            {{mensajeAlerta}}
+        </div>
+        }
+
+        <div class="row">
+            @for(producto of productos; track producto._id){
+            <div class="col-md-4 mt-4">
+                <div class="card cursor border-0 bg-light rounded-4 p-3" [class.inactivo]="!producto.active"
+                    (click)="mostrarModalEditarProducto(producto)">
+                    <img class="card-img-top img-fixed rounded-4 remove-bg" 
+                    [src]="producto.image ? producto.image : '/sin_imagen.jpg'" 
+                    alt="Imagen del producto">                    <div class="card-body descripcion">
+                        <p class="mb-4">{{producto.name}}</p>
+                        <p class="mb-0" style="position:absolute; bottom:1.25em;">{{producto.price}} €</p>
+                    </div>
+                </div>
+            </div>}
+            <div class="col-md-4 mt-4">
+                <div class="card  text-center cursor border-0 bg-light rounded-4 p-3" (click)="mostrarModalNuevoProducto()">
+                    <div style="min-height: 400px;"
+                        class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <i class="fas fa-plus fa-2x"></i>
+                        <p class="mt-2 descripcion">Añadir nuevo producto</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    @if(mostrarModal){
+    <div class="modal d-block bd-example-modal-lg " tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 bg-light">
+
+                <app-product-card [productoSeleccionado]="this.productoSeleccionado"
+                    (guardarCambios)="guardarCambiosProducto($event)" (borrarProducto)="eliminarProducto($event)"
+                    (cerrarModal)="cerrarModal()"></app-product-card>
+
+            </div>
+        </div>
+    </div>
+    }
+
+    @if(modalNuevoProducto){
+    <div class="modal d-block bd-example-modal-lg " tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content rounded-4 border-0 bg-light ">
+
+                <app-product-form (cerrarModal)="cerrarModal()"></app-product-form>
+
+            </div>
+        </div>
+    </div>
+    }
+
+</section>
