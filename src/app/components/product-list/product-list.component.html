@@ -20,7 +20,7 @@
                 <div class="card cursor border-0 bg-light rounded-4 p-3" [class.inactivo]="!producto.active"
                     (click)="mostrarModalEditarProducto(producto)">
                     <img class="card-img-top img-fixed rounded-4 remove-bg" 
-                    [src]="producto.image ? producto.image : '/sin_imagen.jpg'" 
+                    [src]="producto.image ? producto.image : './sin_imagen.jpg'" 
                     alt="Imagen del producto">                    <div class="card-body descripcion">
                         <p class="mb-4">{{producto.name}}</p>
                         <p class="mb-0" style="position:absolute; bottom:1.25em;">{{producto.price}} €</p>

@@ -5,7 +5,7 @@
         @if(!edicionActiva){
 
             <img
-            [src]="productoSeleccionado.image || '/sin_imagen.jpg'"
+            [src]="productoSeleccionado.image || './sin_imagen.jpg'"
             style="margin:auto; display:block; mix-blend-mode: multiply!important;"
             class="img-fluid rounded-4 remove-bg"
             alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
@@ -36,7 +36,7 @@
 
         }@else {
             <img
-            [src]="productoEditable.image || '/sin_imagen.jpg'"
+            [src]="productoEditable.image || './sin_imagen.jpg'"
             style="margin:auto; display:block; mix-blend-mode: multiply!important;"
             class="img-fluid rounded-4 remove-bg"
             alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
