@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Ifiltro } from '../../interfaces/ifiltro';
 
 @Component({
   selector: 'app-product-filter',
@@ -12,13 +13,14 @@ export class ProductFilterComponent {
   
   @Output() onFiltrar = new EventEmitter<any>();
 
-  // Objeto para almacenar los filtros
-  filtros = {
+  // Objeto para almacenar los filtros por defecto, usamos undefined para mostrar todos los productos,
+  // independientemente del estado del producto.
+  filtros: Ifiltro = {
     nombre: '',
     categoria: '',
     precioMin: 0,
     precioMax: 99,
-    activo: false,
+    activo: undefined,
   };
 
   // Aplica los filtros y emite el evento
@@ -33,7 +35,7 @@ export class ProductFilterComponent {
       categoria: '',
       precioMin: 0,
       precioMax: 99,
-      activo: false,
+      activo: undefined,
     };
     this.aplicarFiltros();
   }

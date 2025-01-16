@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
   mostrarAlerta: boolean = false;
   mensajeAlerta: string = '';
   productoSeleccionado: IProduct;
-  @Input() filtrosActuales: any = {};
+  filtros: any = {};
 
   // Constructor que inyecta el servicio ProductService
   constructor(private productService: ProductService) {
@@ -47,19 +47,10 @@ export class ProductListComponent implements OnInit {
     };
   }
 
-  // Filtra los productos según los criterios actuales
-  filtrarProductos(filtros: any): void {
-    this.filtrosActuales = filtros;
-    this.productos = this.productService.obtenerProductos().filter(p => {
-      // Comprueba si el producto cumple con los filtros
-      let coincideNombre: boolean = !filtros.nombre || p.name.toLowerCase().includes(filtros.nombre.toLowerCase());
-      let coincideCategoria: boolean = !filtros.categoria || p.category === filtros.categoria;
-      let precioMinValido: boolean = !filtros.precioMin || p.price >= filtros.precioMin;
-      let precioMaxValido: boolean = !filtros.precioMax || p.price <= filtros.precioMax;
-      let activoValido: boolean = !filtros.activo || p.active;
-      // Devuelve true si el producto cumple con todos los filtros (todos son true)
-      return coincideNombre && coincideCategoria && precioMinValido && precioMaxValido && activoValido;
-    });
+  // Recibe los filtros y actualiza la lista de productos
+  aplicarFiltros(filtros: any): void {
+    this.filtros = filtros;
+    this.productos = this.productService.obtenerProductosFiltrados(filtros);
   }
 
     // Muestra el modal para editar un producto existente
@@ -78,7 +69,7 @@ export class ProductListComponent implements OnInit {
     this.mostrarModal = false;
     this.modalNuevoProducto = false;
     this.productos = this.productService.obtenerProductos();
-    this.filtrarProductos(this.filtrosActuales);
+    this.aplicarFiltros(this.filtros);
     this.productoSeleccionado = this.generarProductoVacio();
   }
 

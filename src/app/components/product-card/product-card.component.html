@@ -5,7 +5,7 @@
         @if(!edicionActiva){
 
             <img
-            [src]="productoSeleccionado.image || '/Actividad_3/assets/sin_imagen.jpg'"
+            [src]="productoSeleccionado.image || 'assets/sin_imagen.jpg'"
             style="max-height: 500px;"
             class="img-fluid rounded-4 remove-bg"
             alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
@@ -36,7 +36,7 @@
 
         }@else {
             <img
-            [src]="productoEditable.image || '/Actividad_3/assets/sin_imagen.jpg'"
+            [src]="productoEditable.image || 'assets/sin_imagen.jpg'"
             style="max-height: 500px;"
             class="img-fluid rounded-4 remove-bg"
             alt="{{productoEditable.name || 'Vista previa de la imagen'}}"

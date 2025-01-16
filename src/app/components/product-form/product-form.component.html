@@ -8,7 +8,7 @@
 
     <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
       <img
-      [src]="modelForm.get('image')?.value ||  '/Actividad_3/assets/sin_imagen.jpg'"
+      [src]="modelForm.get('image')?.value ||  'assets/sin_imagen.jpg'"
       style="margin:auto; display:block; mix-blend-mode: multiply!important; width: 100%; height: 400px; object-fit: cover;"
       class="img-fluid rounded-4 remove-bg mb-4"
       alt="Vista previa"

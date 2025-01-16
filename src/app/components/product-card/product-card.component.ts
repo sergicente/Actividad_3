@@ -49,7 +49,7 @@ export class ProductCardComponent {
       this.productoEditable.name.trim() !== '' &&
       this.productoEditable.name.trim().length > 3 &&
       this.productoEditable.description.trim() !== '' &&
-      this.productoEditable.description.trim().length > 3 &&
+      this.productoEditable.description.trim().length > 10 &&
       !isNaN(Number(this.productoEditable.price)) &&
       Number(this.productoEditable.price) > 0
     );
