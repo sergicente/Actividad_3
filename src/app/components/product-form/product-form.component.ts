@@ -34,13 +34,8 @@ export class ProductFormComponent {
   onSubmit(): void {
     if (this.modelForm.valid) {
       const nuevoProducto: IProduct = {
+        ...this.modelForm.value,
         _id: String(Date.now()),
-        name: this.modelForm.value.name || '',
-        description: this.modelForm.value.description || '',
-        price: this.modelForm.value.price || 0,
-        category: this.modelForm.value.category || '',
-        image: this.modelForm.value.image || '',
-        active: this.modelForm.value.active || false
       };
       this.productService.addProduct(nuevoProducto);
       this.cerrar();
