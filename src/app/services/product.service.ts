@@ -6,7 +6,7 @@ import { IProduct } from '../interfaces/iproduct';
 })
 export class ProductService {
 
-  private api = 'https://jsonblob.com/api/1326974176178921472';
+  private api = 'https://jsonblob.com/api/1330899915362197504';
   private productos: IProduct[] = []
 
   // Llama a la API en el constructor para cargar los productos al inicializar el servicio

@@ -2,6 +2,7 @@ import { IProduct } from '../../interfaces/iproduct';
 import { ProductService } from '../../services/product.service';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-product-form',
@@ -31,12 +32,12 @@ export class ProductFormComponent {
     }, []);
   }
 
-  // Método que se ejecuta al enviar el formulario. Generamos un id único usando un timestamp y añadimos el producto al servicio.
+  // Método que se ejecuta al enviar el formulario. Generamos un id único usando la libreria UUID.
   onSubmit(): void {
     if (this.modelForm.valid) {
       const nuevoProducto: IProduct = {
         ...this.modelForm.value,
-        _id: String(Date.now()),
+        _id: uuidv4()
       };
       this.productService.addProduct(nuevoProducto);
       this.notificarMensaje.emit('Producto añadido correctamente.');
