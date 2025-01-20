@@ -12,10 +12,16 @@ body {
   cursor: pointer;
 }
 
-.remove-bg{
-  mix-blend-mode: multiply;
+.cerrar {
+  padding: 1.1rem 1.5rem !important;
 }
 
-.cerrar{
-  padding: 1.1rem 1.5rem !important;
+.imagenesProducto {
+  margin: auto;
+  display: block;
+  mix-blend-mode: multiply !important;
+  width: auto;
+  max-width: 100%;
+  height: 450px!important;
+  object-fit:cover;
 }

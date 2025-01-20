@@ -15,6 +15,7 @@ export class ProductFormComponent {
   private productService = inject(ProductService);
   modelForm: FormGroup;
   @Output() cerrarModal: EventEmitter<void> = new EventEmitter();
+  @Output() notificarMensaje: EventEmitter<string> = new EventEmitter();
 
   // Constructor donde se inicializa el formulario reactivo y definimos las validaciones de los campos.
   constructor() {
@@ -38,6 +39,7 @@ export class ProductFormComponent {
         _id: String(Date.now()),
       };
       this.productService.addProduct(nuevoProducto);
+      this.notificarMensaje.emit('Producto añadido correctamente.');
       this.cerrar();
     } else {
       console.log('Formulario inválido');

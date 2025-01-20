@@ -5,7 +5,7 @@
 
     <!-- nombre -->
     <div class="col-lg-3 col-md-3 col-sm-6">
-      <input type="text" class="form-control  rounded-3 border-0" placeholder="Buscar por nombre" name="nombre"
+      <input type="text" class="form-control  rounded-3 border-0" placeholder="Buscar artículo" name="nombre"
         [(ngModel)]="filtros.nombre" (ngModelChange)="aplicarFiltros()" />
     </div>
 
@@ -31,7 +31,7 @@
       <span class="me-1">-</span>
       <input type="number" class="form-control text-center me-1 rounded-3 border-0 " placeholder="Máx." name="precioMax"
         [(ngModel)]="filtros.precioMax" (ngModelChange)="aplicarFiltros()" min="0" max="99" />
-      
+
     </div>
 
     <!-- activo -->
@@ -39,7 +39,7 @@
       <input type="checkbox" class="form-check-input" name="activo" [(ngModel)]="filtros.activo"
         (ngModelChange)="aplicarFiltros()" id="activoCheck" />
       <label for="activoCheck" class="ms-2 small form-check-label">
-        {{ filtros.activo === true ? 'Activos' : filtros.activo === false ? 'Desactivados' : 'Todos' }}
+        {{ filtros.activo === true ? 'Activos' : 'Inactivos' }}
 
       </label>
     </div>

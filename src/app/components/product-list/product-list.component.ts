@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
   mostrarAlerta: boolean = false;
   mensajeAlerta: string = '';
   productoSeleccionado: IProduct;
-  filtros: any = {};
+  filtros: any = { activo: true };
 
   // Constructor que inyecta el servicio ProductService
   constructor(private productService: ProductService) {
@@ -31,7 +31,7 @@ export class ProductListComponent implements OnInit {
   // Carga de forma asíncrona los productos desde la API a través del servicio al iniciar el componente
   async ngOnInit(): Promise<void> {
     await this.productService.cargarProductosApi();
-    this.productos = this.productService.obtenerProductos();
+    this.productos = this.productService.obtenerProductosFiltrados(this.filtros);
   }
 
     // Retorna un objeto iProduct con todas las propiedades de un producto inicializadas a valores vacíos
@@ -74,29 +74,14 @@ export class ProductListComponent implements OnInit {
   }
 
     // Muestra un mensaje de alerta por un tiempo determinado
-  mostrarMensajeAlerta(texto: string, tiempo: number): void {
+  mostrarMensajeAlerta(texto: string): void {
     this.mensajeAlerta = texto;
     this.mostrarAlerta = true;
     setTimeout(() => {
       this.mostrarAlerta = false;
-    }, tiempo);
+    }, 5000);
   }
 
-    // Elimina un producto por su ID, llamando al servicio para eliminarlo, y actualiza la lista de productos
-  eliminarProducto(id: string) {
-    this.productService.eliminarProducto(id);
-    this.productos = this.productService.obtenerProductos();
-    this.cerrarModal();
-    this.mostrarMensajeAlerta('Producto eliminado correctamente.', 3000)
 
-  }
-
-    // Guarda los cambios en un producto editado, llamando al servicio para actualizarlo, y actualiza la lista de productos
-  guardarCambiosProducto(producto: IProduct): void {
-    this.productService.actualizarProducto(producto);
-    this.productos = this.productService.obtenerProductos();
-    this.cerrarModal();
-    this.mostrarMensajeAlerta('Producto actualizado correctamente.', 3000);
-  }
 
 }

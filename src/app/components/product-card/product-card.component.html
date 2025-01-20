@@ -1,15 +1,11 @@
-<section >
+<section>
     <div class="position-absolute top-0 end-0 cerrar cursor" (click)="cerrar()"><i style="font-size: 25px; color:grey;"
-        class="fa-solid fa-xmark"></i></div>
+            class="fa-solid fa-xmark"></i></div>
     <div class="p-5">
         @if(!edicionActiva){
 
-            <img
-            [src]="productoSeleccionado.image || 'assets/sin_imagen.jpg'"
-            style="max-height: 500px;"
-            class="img-fluid rounded-4 remove-bg"
-            alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
-          />
+        <img [src]="productoSeleccionado.image || 'assets/sin_imagen.jpg'"
+            class="rounded-4 imagenesProducto" alt="{{productoSeleccionado.name || 'Vista previa de la imagen'}}" />
         <div class="mt-4">
             <p style="font-size: 28px;">{{productoSeleccionado.name}}</p>
             <p style="font-size: 24px;">{{productoSeleccionado.price}} €</p>
@@ -27,53 +23,107 @@
                     {{productoSeleccionado._id}}</li>
             </ul>
             <div class="d-flex mt-4 justify-content-between align-items-center">
-                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn rounded-3 btn-sm btn-primary shadow-sm"
-                    (click)="editarProducto()">Editar</button>
-                <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn rounded-3 btn-sm btn-danger shadow-sm"
-                    (click)="borrarProducto.emit(productoSeleccionado._id)">Eliminar</button>
+                <button type="button" data-mdb-button-init data-mdb-ripple-init
+                    class="btn rounded-3 btn-sm btn-primary shadow-sm" (click)="editarProducto()"><i
+                        class="fas fa-pencil me-2"></i>Editar</button>
+                <button type="button" data-mdb-button-init data-mdb-ripple-init
+                    class="btn rounded-3 btn-sm btn-danger shadow-sm"
+                    (click)="eliminarProducto(productoSeleccionado._id)"><i
+                        class="fas fa-trash me-2"></i>Eliminar</button>
             </div>
         </div>
 
         }@else {
-            <img
-            [src]="productoEditable.image || 'assets/sin_imagen.jpg'"
-            style="max-height: 500px;"
-            class="img-fluid rounded-4 remove-bg"
-            alt="{{productoEditable.name || 'Vista previa de la imagen'}}"
-          />
-        <div class="mt-4">
-            <strong>Nombre:</strong>
-            <input type="text" class="form-control mb-3 rounded-3 border-1 " name="" id="" [(ngModel)]="productoEditable.name">
-            <strong>Descripción:</strong>
-            <textarea class="form-control mb-3 rounded-3 border-1 " rows="3" [(ngModel)]="productoEditable.description">
-                            </textarea>
-            <strong>Precio:</strong>
-            <input type="number" class="form-control mb-3 rounded-3 border-1 " name="" id="" [(ngModel)]="productoEditable.price">
 
-            <strong>Categoría:</strong>
-            <select id="category" class="form-select mb-3 rounded-3 border-1 " [(ngModel)]="productoEditable.category"
-                (change)="seleccionarCategoria($event)">
-                <option value="hombre">Hombre</option>
-                <option value="mujer">Mujer</option>
-                <option value="niño">Niño</option>
-            </select>
-
-            <strong>Imagen:</strong>
-            <input type="text" class="form-control mb-3 rounded-3 border-1 " name="" id="" [(ngModel)]="productoEditable.image">
-            <strong>Estado:</strong><br>
-            <div class="form-switch">
-                <input class="form-check-input me-2" type="checkbox" id="activos" [(ngModel)]="productoEditable.active"
-                    name="activo" /> <span class="me-3">Activo</span>
+        <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+            <img [src]="modelForm.get('image')?.value ||  'assets/sin_imagen.jpg'"
+                class="rounded-4 mb-4 imagenesProducto" alt="Vista previa" />
+            <div class="mb-3">
+                <label for="name" class="form-label small"><strong>Nombre</strong></label>
+                <input id="name" type="text" class="form-control rounded-3 border-1" formControlName="name" />
+                @if(checkControl('name', 'required')){
+                <div class="text-danger small">El nombre es obligatorio.</div>
+                }
+                @if(checkControl('name', 'minlength')){
+                <div class="text-danger small">El nombre debe tener al menos 3 caracteres.</div>
+                }
             </div>
-                <div class="d-flex mt-4 justify-content-between align-items-center">
-                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn rounded-3 btn-sm btn-danger shadow-sm"
-                        (click)="cancelar()">Cancelar</button>
-                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn rounded-3 btn-sm btn-success shadow-sm"
-                        [disabled]="!validarFormulario()" (click)="guardarProducto()">Guardar Cambios</button>
-                </div>
 
-        </div>
+            <div class="mb-3">
+                <label for="name" class="form-label small"><strong>Descripción</strong></label>
+                <textarea id="name" rows="4" class="form-control rounded-3 border-1"
+                    formControlName="description"></textarea>
+                @if(checkControl('description', 'required')){
+                <div class="text-danger small">La descripción es obligatoria.</div>
+                }
+                @if(checkControl('description', 'minlength')){
+                <div class="text-danger small">La descripción debe tener al menos 10 caracteres.</div>
+                }
+            </div>
 
+            <div class="mb-3">
+                <label for="price" class="form-label small"><strong>Precio</strong></label>
+                <input id="price" type="number" class="form-control rounded-3 border-1" formControlName="price" />
+                @if(checkControl('price', 'required')){
+                <div class="text-danger small">El precio es un campo numérico obligatorio.</div>
+                }
+                @if(checkControl('price', 'min')){
+                <div class="text-danger small">El precio debe ser mayor que 0.</div>
+                }
+            </div>
+
+
+            <div class="mb-3">
+                <label for="category" class="form-label small"><strong>Categoría</strong></label>
+                <select id="category" class="form-select rounded-3 border-1" formControlName="category">
+                    <option value="" selected disabled>Selecciona una categoría</option>
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                    <option value="niño">Niño</option>
+                </select>
+                @if(checkControl('category', 'required')){
+                <div class="text-danger small">Debes seleccionar una categoría.</div>
+                }
+            </div>
+
+            <div class="mb-3 visually-hidden">
+                <label for="_id" class="form-label small"><strong>Id del producto</strong></label>
+                <input id="_id" type="text" class="form-control rounded-3 border-1" formControlName="_id"
+                    [readonly]="true" />
+
+                @if(checkControl('_id', 'required')){
+                <div class="text-danger small">El ID es obligatorio.</div>
+                }
+                @if(checkControl('_id', 'minlength')){
+                <div class="text-danger small">El ID debe tener al menos 3 caracteres.</div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label small"><strong>URL de la imagen (opcional)</strong></label>
+                <input id="image" type="text" class="form-control rounded-3 border-1 mb-3" formControlName="image" />
+                @if(checkControl('image', 'pattern')){
+                <div class="text-danger small mb-3">Debes introducir una URL válida.</div>
+                }
+            </div>
+
+            <label for="image" class="form-label small"><strong>Habilitar producto</strong></label>
+            <div class="form-switch">
+                <input class="form-check-input me-2" type="checkbox" id="active" formControlName="active"
+                    name="active" /> <span class="me-3">
+                    {{ modelForm.get('active')?.value ? 'Activo' : 'Inactivo' }}
+                </span>
+            </div>
+
+
+            <div class="d-flex mt-4 justify-content-between align-items-center">
+                <button type="button" data-mdb-button-init data-mdb-ripple-init
+                    class="btn rounded-3 btn-sm btn-danger shadow-sm" (click)="cancelar()"><i
+                        class="fas fa-ban me-2"></i>Cancelar</button>
+                <button type="submit" class=" mt-4 rounded-3 btn btn-sm btn-success" [disabled]="modelForm.invalid"><i
+                        class="fas fa-floppy-disk me-2"></i>Guardar cambios</button>
+            </div>
+        </form>
         }
     </div>
 </section>

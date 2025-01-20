@@ -13,14 +13,13 @@ export class ProductFilterComponent {
   
   @Output() onFiltrar = new EventEmitter<any>();
 
-  // Objeto para almacenar los filtros por defecto, usamos undefined para mostrar todos los productos,
-  // independientemente del estado del producto.
+  // Objeto para almacenar los filtros por defecto, usamos undefined para poder dejar el campo vacío
   filtros: Ifiltro = {
     nombre: '',
     categoria: '',
-    precioMin: 0,
-    precioMax: 99,
-    activo: undefined,
+    precioMin: undefined,
+    precioMax: undefined,
+    activo: true,
   };
 
   // Aplica los filtros y emite el evento
@@ -33,9 +32,9 @@ export class ProductFilterComponent {
     this.filtros = {
       nombre: '',
       categoria: '',
-      precioMin: 0,
-      precioMax: 99,
-      activo: undefined,
+      precioMin: undefined,
+      precioMax: undefined,
+      activo: true,
     };
     this.aplicarFiltros();
   }

@@ -1,28 +1,54 @@
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IProduct } from '../../interfaces/iproduct';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
 })
 export class ProductCardComponent {
 
-
-  @Input()
-  productoSeleccionado: IProduct = this.crearProductoDefault();
-  @Output() borrarProducto: EventEmitter<string> = new EventEmitter;
+  @Input() productoSeleccionado: IProduct = this.crearProductoDefault();
   @Output() cerrarModal: EventEmitter<void> = new EventEmitter();
-  @Output() guardarCambios: EventEmitter<IProduct> = new EventEmitter<IProduct>();
-  @Output() cancelarEdicion: EventEmitter<void> = new EventEmitter<void>();
-  @Output() notificarCambios: EventEmitter<void> = new EventEmitter<void>();
+  @Output() notificarMensaje: EventEmitter<string> = new EventEmitter();
 
   edicionActiva: boolean = false;
-  productoEditable: IProduct = { ...this.productoSeleccionado };
-  formularioInvalido: boolean = false;
+
+  modelForm: FormGroup;
+
+  constructor(private productService: ProductService) {
+    this.modelForm = new FormGroup({
+      _id: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      description: new FormControl(null, [Validators.required, Validators.minLength(10)]),
+      price: new FormControl(null, [Validators.required, Validators.min(0.01)]),
+      category: new FormControl('', [Validators.required]),
+      image: new FormControl(null, [
+        Validators.pattern(/^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)([\/\w\-._~:?#[\]@!$&'()*+,;=]*)?$/),
+      ]),
+      active: new FormControl(true)
+    }, []);
+  }
+
+  checkControl(formControlName: string, validador: string): boolean | undefined {
+    return this.modelForm.get(formControlName)?.hasError(validador) && this.modelForm.get(formControlName)?.touched;
+  }
+
+  // Envía los cambios realizados al servicio
+  onSubmit(): void {
+    if (this.modelForm.valid) {
+      const productoActualizado: IProduct = this.modelForm.value;
+      this.productService.actualizarProducto(productoActualizado);
+      this.notificarMensaje.emit('Producto actualizado correctamente.');
+      this.cerrar();
+    } else {
+      console.log('Formulario inválido');
+    }
+  }
 
   // Crea un producto vacío por defecto
   private crearProductoDefault(): IProduct {
@@ -40,34 +66,14 @@ export class ProductCardComponent {
   // Activa el modo edición y duplica el producto seleccionado, esto es util en caso de que se cancele la edición
   editarProducto(): void {
     this.edicionActiva = true;
-    this.productoEditable = { ...this.productoSeleccionado };
+    this.modelForm.setValue(this.productoSeleccionado);
   }
 
-  // Realiza validaciones en el formulario, como que los campos no estén vacíos y que el precio sea un número válido
-  validarFormulario(): boolean {
-    return (
-      this.productoEditable.name.trim() !== '' &&
-      this.productoEditable.name.trim().length > 3 &&
-      this.productoEditable.description.trim() !== '' &&
-      this.productoEditable.description.trim().length > 10 &&
-      !isNaN(Number(this.productoEditable.price)) &&
-      Number(this.productoEditable.price) > 0
-    );
-  }
-
-  // Guarda los cambios realizados en el producto
-  guardarProducto(): void {
-    this.formularioInvalido = false;
-    this.guardarCambios.emit({ ...this.productoEditable });
-    this.edicionActiva = false;
-    this.notificarCambios.emit();
-  }
-
-  // Cancela la edición y restaura el producto a sus valores originales
-  cancelar(): void {
-    this.cancelarEdicion.emit();
-    this.edicionActiva = false;
-    this.productoEditable = { ...this.productoSeleccionado };
+  // Elimina un producto por su ID, llamando al servicio para eliminarlo, y actualiza la lista de productos
+  eliminarProducto(id: string) {
+    this.productService.eliminarProducto(id);
+    this.notificarMensaje.emit('Producto eliminado correctamente.'); 
+    this.cerrar();
   }
 
   // Emite la señal para que se cierre el modal en el componente padre
@@ -75,10 +81,9 @@ export class ProductCardComponent {
     this.cerrarModal.emit();
   }
 
-  // Función vinculada al evento (change) del elemento <select> del formulario.
-  // Actualiza la categoría del producto cuando el usuario selecciona una opción en el menú desplegable.
-  seleccionarCategoria(event: Event): void {
-    this.productoEditable.category = (event.target as HTMLSelectElement).value;
+  // Cancela la edición y restaura el producto a sus valores originales
+  cancelar(): void {
+    this.edicionActiva = false;
   }
 
 }

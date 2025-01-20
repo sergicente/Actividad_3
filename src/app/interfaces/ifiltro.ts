@@ -1,8 +1,8 @@
 export interface Ifiltro {
     nombre: string;
     categoria: string;
-    precioMin: number;
-    precioMax: number; 
-    activo: boolean | undefined;
+    precioMin: number| undefined;
+    precioMax: number| undefined;
+    activo: boolean;
   
 }

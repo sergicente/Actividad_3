@@ -9,8 +9,7 @@
     <form [formGroup]="modelForm" (ngSubmit)="onSubmit()">
       <img
       [src]="modelForm.get('image')?.value ||  'assets/sin_imagen.jpg'"
-      style="margin:auto; display:block; mix-blend-mode: multiply!important; width: 100%; height: 400px; object-fit: cover;"
-      class="img-fluid rounded-4 remove-bg mb-4"
+      class="img-fluid rounded-4 remove-bg mb-4 imagenesProducto"
       alt="Vista previa"
     />
       <div class="mb-3">
@@ -72,11 +71,12 @@
 
       <label for="image" class="form-label small"><strong>Habilitar producto</strong></label>
       <div class="form-switch">
-        <input class="form-check-input me-2" type="checkbox" id="active" formControlName="active" name="active" /> <span
-          class="me-3">Activo</span>
+        <input class="form-check-input me-2" type="checkbox" id="active" formControlName="active" name="active" /> <span class="me-3">
+          {{ modelForm.get('active')?.value ? 'Activo' : 'Inactivo' }}
+      </span>
       </div>
 
-      <button type="submit" class=" mt-4 rounded-3 btn btn-sm btn-success" [disabled]="modelForm.invalid">Añadir
+      <button type="submit" class=" mt-4 rounded-3 btn btn-sm btn-success" [disabled]="modelForm.invalid"><i class="fas fa-floppy-disk me-2"></i>Guardar
         Producto</button>
     </form>
 
