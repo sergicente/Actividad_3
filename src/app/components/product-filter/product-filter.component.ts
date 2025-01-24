@@ -19,7 +19,7 @@ export class ProductFilterComponent {
     categoria: '',
     precioMin: undefined,
     precioMax: undefined,
-    activo: true,
+    activo: false,
   };
 
   // Aplica los filtros y emite el evento
@@ -34,7 +34,7 @@ export class ProductFilterComponent {
       categoria: '',
       precioMin: undefined,
       precioMax: undefined,
-      activo: true,
+      activo: false,
     };
     this.aplicarFiltros();
   }

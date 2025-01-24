@@ -59,25 +59,32 @@ export class ProductService {
 
     // Filtrar por nombre si el filtro existe
     if (filtros.nombre) {
-      resultado = resultado.filter(producto => 
+      resultado = resultado.filter(producto =>
         producto.name.toLowerCase().includes(filtros.nombre.toLowerCase())
       );
     }
-  
-  // Filtrar por rango de precio si los filtros existen
-  if (filtros.precioMin !== undefined) {
-    resultado = resultado.filter(producto => producto.price >= filtros.precioMin);
-  }
-  
-  if (filtros.precioMax !== undefined) {
-    resultado = resultado.filter(producto => producto.price <= filtros.precioMax);
-  }
-  
-  // Filtrar por estado activo si el filtro existe
-  if (filtros.activo !== undefined) {
-    resultado = resultado.filter(producto => producto.active === filtros.activo);
-  }
-  
+
+    // Filtrar por categoría si el filtro existe
+    if (filtros.categoria) {
+      resultado = resultado.filter(producto =>
+        producto.category.toLowerCase().includes(filtros.categoria.toLowerCase())
+      );
+    }
+
+    // Filtrar por rango de precio si los filtros existen
+    if (filtros.precioMin) {
+      resultado = resultado.filter(producto => producto.price >= filtros.precioMin);
+    }
+
+    if (filtros.precioMax) {
+      resultado = resultado.filter(producto => producto.price <= filtros.precioMax);
+    }
+
+    // Filtrar por estado activo si el filtro existe
+    if (filtros.activo) {
+      resultado = resultado.filter(producto => producto.active === filtros.activo);
+    }
+
     // Devolver siempre un array, aunque esté vacío
     return resultado;
   }

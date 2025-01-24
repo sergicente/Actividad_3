@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
   mostrarAlerta: boolean = false;
   mensajeAlerta: string = '';
   productoSeleccionado: IProduct;
-  filtros: any = { activo: true };
+  filtros: any = { activo: false };
 
   // Constructor que inyecta el servicio ProductService
   constructor(private productService: ProductService) {
