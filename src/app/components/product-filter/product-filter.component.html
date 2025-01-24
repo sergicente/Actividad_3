@@ -11,11 +11,9 @@
 
     <!-- categoría -->
     <div class="col-lg-3 col-md-3 col-sm-6 d-flex align-items-center">
-      <label class="me-2" for="categoria"><small>Categoría:</small></label>
-
       <select class="form-select  rounded-3 border-0" name="categoria" [(ngModel)]="filtros.categoria"
         (ngModelChange)="aplicarFiltros()">
-        <option value="">Todas</option>
+        <option value="">Todas las categorías</option>
         <option value="hombre">Hombre</option>
         <option value="mujer">Mujer</option>
         <option value="niño">Niño</option>
@@ -28,7 +26,7 @@
 
       <input type="number" class="form-control text-center me-1 rounded-3 border-0 " placeholder="Mín." name="precioMin"
         [(ngModel)]="filtros.precioMin" (ngModelChange)="aplicarFiltros()" min="0" max="99" />
-      <span class="me-1">-</span>
+      <span class="me-1"></span>
       <input type="number" class="form-control text-center me-1 rounded-3 border-0 " placeholder="Máx." name="precioMax"
         [(ngModel)]="filtros.precioMax" (ngModelChange)="aplicarFiltros()" min="0" max="99" />
 
