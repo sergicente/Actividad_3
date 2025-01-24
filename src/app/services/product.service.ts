@@ -55,20 +55,31 @@ export class ProductService {
 
   // Aplica filtros y devuelve productos filtrados
   obtenerProductosFiltrados(filtros: any): IProduct[] {
-    return this.productos.filter(producto => {
-      return (
-        // Si hay texto en el filtro, comprueba que el nombre del producto contenga el texto.
-        (!filtros.nombre || producto.name.toLowerCase().includes(filtros.nombre.toLowerCase())) &&
-        //  Comprueba que la categoría del producto coincida exactamente con la del filtro (si hay filtro).
-        (!filtros.categoria || producto.category === filtros.categoria) &&
-        // Comprueba que el precio del producto esté dentro del rango del filtro (si hay filtro).
-        (!filtros.precioMin || producto.price >= filtros.precioMin) &&
-        (!filtros.precioMax || producto.price <= filtros.precioMax) &&
-        // Si el filtro está en undefined, significa que queremos mostrar todos los productos (vista por defecto)
-        // Por lo contrario si el filtro es true o false, solo pasa los productos que coincidan con el estado.
-        (filtros.activo === undefined || producto.active === filtros.activo)
+    let resultado = this.productos;
+
+    // Filtrar por nombre si el filtro existe
+    if (filtros.nombre) {
+      resultado = resultado.filter(producto => 
+        producto.name.toLowerCase().includes(filtros.nombre.toLowerCase())
       );
-    });
+    }
+  
+  // Filtrar por rango de precio si los filtros existen
+  if (filtros.precioMin !== undefined) {
+    resultado = resultado.filter(producto => producto.price >= filtros.precioMin);
+  }
+  
+  if (filtros.precioMax !== undefined) {
+    resultado = resultado.filter(producto => producto.price <= filtros.precioMax);
+  }
+  
+  // Filtrar por estado activo si el filtro existe
+  if (filtros.activo !== undefined) {
+    resultado = resultado.filter(producto => producto.active === filtros.activo);
+  }
+  
+    // Devolver siempre un array, aunque esté vacío
+    return resultado;
   }
 
 
